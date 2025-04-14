@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     TextView resultText;
     EditText urlInput;
     Button submitBtn;
-    LinearLayout homeBtn, historyBtn;
+    Button homeBtn, historyBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,30 +77,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... urls) {
-            String result = "";
+            String url = urls[0];
+            String result;
 
             try {
-                Document doc = Jsoup.connect(urls[0]).get();
-
-                // Extract the page title
-                String title = doc.title();
-
-                // Extract all elements with class "HNMDR"
-                StringBuilder titlesBuilder = new StringBuilder();
-                Elements titleElements = doc.select(".HNMDR");
-                for (Element el : titleElements) {
-                    titlesBuilder.append("- ").append(el.text().trim()).append("\n");
+                if (url.contains("thehindu.com")) {
+                    result = scrapeHindu(url);
+                } else if (url.contains("economictimes.indiatimes.com")) {
+                    result = scrapeEconomicTimes(url);
+                } else if (url.contains("hindustantimes.com")) {
+                    result = scrapeHindustanTimes(url);
+                } else if (url.contains("indianexpress.com")) {
+                    result = scrapeIndianExpress(url);
+                } else if (url.contains("timesofindia")){
+                    result = scrapeTimesOfIndia(url);
+                }else{
+                    result = "Unsupported website or URL format.";
                 }
-
-                // Extract body content from the class "js_tbl_article"
-                Element bodyElement = doc.selectFirst(".js_tbl_article");
-                String body = (bodyElement != null) ? bodyElement.text().trim() : "No body content found.";
-
-                // Combine everything into one result string
-                result = "Page Title: " + title +
-                        "\n\nHeadlines:\n" + titlesBuilder.toString() +
-                        "\nBody:\n" + body;
-
             } catch (Exception e) {
                 result = "Error scraping the page: " + e.getMessage();
             }
@@ -110,9 +103,72 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            // ✅ FIX: Use MainActivity.this for context
-            resultText.setText(result);
+            resultText.setText(result); // assumes resultText is your TextView
+        }
+//does nnot work
 
+
+        private String scrapeHindu(String url) throws Exception {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.select("h1.title").text();
+            String body = doc.select(".articlebodycontent").text();
+            return "Title: " + title + "\n\nBody:\n" + body;
+        }
+
+        private String scrapeEconomicTimes(String url) throws Exception {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            String body = doc.select(".artText").text(); // or try "div.Normal"
+            return "Title: " + title + "\n\nBody:\n" + body;
+        }
+
+        private String scrapeHindustanTimes(String url) throws Exception {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.select("h1").text();
+            String body = doc.select(".taboola-readmore").text();
+            return "Title: " + title + "\n\nBody:\n" + body;
+        }
+
+        private String scrapeIndianExpress(String url) throws Exception {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.select(".native_story_title").text();
+            String body = doc.select("div.full-details p").text();
+            return "Title: " + title + "\n\nBody:\n" + body;
+        }
+        private String scrapeTimesOfIndia(String url) throws  Exception{
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.select(".HNMDR").text();
+            String body = doc.select(".js_tbl_article").text();
+            return "Title: " + title + "\n\nBody:\n" + body;
         }
     }
+
 }
+
+
+
+//try {
+//Document doc = Jsoup.connect(urls[0]).get();
+//
+//// Extract the page title
+//String title = doc.title();
+//
+//// Extract all elements with class "HNMDR"
+//StringBuilder titlesBuilder = new StringBuilder();
+//Elements titleElements = doc.select(".HNMDR");
+//                for (Element el : titleElements) {
+//        titlesBuilder.append("- ").append(el.text().trim()).append("\n");
+//                }
+//
+//// Extract body content from the class "js_tbl_article"
+//Element bodyElement = doc.selectFirst(".js_tbl_article");
+//String body = (bodyElement != null) ? bodyElement.text().trim() : "No body content found.";
+//
+//// Combine everything into one result string
+//result = "Page Title: " + title +
+//        "\n\nHeadlines:\n" + titlesBuilder.toString() +
+//        "\nBody:\n" + body;
+//
+//            } catch (Exception e) {
+//result = "Error scraping the page: " + e.getMessage();
+//            }

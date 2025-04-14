@@ -1,5 +1,6 @@
 package com.example.media_bias;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     Button showTableBtn;
     TableLayout historyTable;
-
+    Button homebtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +22,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         showTableBtn = findViewById(R.id.showTableBtn);
         historyTable = findViewById(R.id.historyTable);
-
+        homebtn = findViewById(R.id.homeBtn);
         showTableBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,6 +31,14 @@ public class HistoryActivity extends AppCompatActivity {
                 // Example data rows
                 addRow("1", "https://example.com/article1");
                 addRow("2", "https://example.com/article2");
+            }
+        });
+
+        homebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HistoryActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

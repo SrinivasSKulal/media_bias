@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#121212"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="20dp">
 
     <Button
         android:id="@+id/showTableBtn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="SHOW TABLE"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#007BFF" />
+        android:backgroundTint="#007BFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TableLayout
         android:id="@+id/historyTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:stretchColumns="*"
         android:visibility="gone"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/showTableBtn"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBarInclude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Table Headers -->
         <TableRow>
             <TextView
                 android:text="ID"
@@ -34,8 +41,16 @@
                 android:padding="8dp" />
         </TableRow>
 
-        <!-- Example row -->
-        <!-- We'll add more rows dynamically -->
-
     </TableLayout>
-</LinearLayout>
+
+    <!-- Bottom Navigation -->
+    <include
+        android:id="@+id/bottomBarInclude"
+        layout="@layout/bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
