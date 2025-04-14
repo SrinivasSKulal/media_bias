@@ -81,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
             String result;
 
             try {
-                if (url.contains("thehindu.com")) {
+//                if (url.contains("deccanherald.com")) {
+//                    result = scrapeDeccan(url);
+//                } else
+                 if (url.contains("thehindu.com")) {
                     result = scrapeHindu(url);
                 } else if (url.contains("economictimes.indiatimes.com")) {
                     result = scrapeEconomicTimes(url);
@@ -106,7 +109,12 @@ public class MainActivity extends AppCompatActivity {
             resultText.setText(result); // assumes resultText is your TextView
         }
 //does nnot work
-
+//        private String scrapeDeccan(String url) throws Exception {
+//            Document doc = Jsoup.connect(url).get();
+//            String title = doc.title();
+//            String body = doc.select(".story-card").text();
+//            return "Title: " + title + "\n\nBody:\n" + body;
+//        }
 
         private String scrapeHindu(String url) throws Exception {
             Document doc = Jsoup.connect(url).get();
