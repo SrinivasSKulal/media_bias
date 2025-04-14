@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#121212"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/showTableBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SHOW TABLE"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#007BFF" />
+
+    <TableLayout
+        android:id="@+id/historyTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:visibility="gone"
+        android:layout_marginTop="20dp">
+
+        <!-- Table Headers -->
+        <TableRow>
+            <TextView
+                android:text="ID"
+                android:textColor="#FFFFFF"
+                android:padding="8dp" />
+            <TextView
+                android:text="URL"
+                android:textColor="#FFFFFF"
+                android:padding="8dp" />
+        </TableRow>
+
+        <!-- Example row -->
+        <!-- We'll add more rows dynamically -->
+
+    </TableLayout>
+</LinearLayout>
